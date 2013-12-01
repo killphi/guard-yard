@@ -33,8 +33,14 @@ module Guard
       true
     end
 
-    def run_on_change(paths)
-      UI.info "[Guard::Yard] Detected changes in #{paths.join(',')}."
+    def run_on_additions(paths)
+      UI.info "[Guard::Yard] Detected additions in #{paths.join(',')}."
+      paths.each{ |path| document([path]) }
+      UI.info "[Guard::Yard] Updated documentation for #{paths.join(',')}."
+    end
+
+    def run_on_modifications(paths)
+      UI.info "[Guard::Yard] Detected modifications in #{paths.join(',')}."
       paths.each{ |path| document([path]) }
       UI.info "[Guard::Yard] Updated documentation for #{paths.join(',')}."
     end
