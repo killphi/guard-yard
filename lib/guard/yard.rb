@@ -1,13 +1,13 @@
 require 'guard'
-require 'guard/guard'
+require 'guard/plugin'
 require 'yard'
 
 module Guard
-  class Yard < Guard
+  class Yard < Plugin
     autoload :Server, 'guard/yard/server'
     attr_accessor :server
 
-    def initialize(watchers=[], options={})
+    def initialize(options={})
       super
       @server = Server.new(options[:port], options[:stdout], options[:stderr])
     end
@@ -36,7 +36,7 @@ module Guard
     def run_on_additions(paths)
       UI.info "[Guard::Yard] Detected additions in #{paths.join(',')}."
       paths.each{ |path| document([path]) }
-      UI.info "[Guard::Yard] Updated documentation for #{paths.join(',')}."
+      UI.info "[Guard::Yard] Created documentation for #{paths.join(',')}."
     end
 
     def run_on_modifications(paths)
